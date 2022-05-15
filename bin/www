@@ -8,7 +8,11 @@ const chat = require('../public/scripts/socketConnection.js')
 
 server.listen(process.env.PORT || 5000)
 server.on("listening", () => {
-  console.log("Listening on Port" + process.env.PORT)
+  if (process.env.PORT) {
+    console.log("Listening on Port " + process.env.PORT)
+  } else {
+    console.log("Listening on Port 5000")
+  }
 });
 
 chat(io)

@@ -21,4 +21,6 @@ app.use(express.static(path.join(__dirname, "public")))
 
 const homeRouter = require('./routes/home')
 
+app.use('/', homeRouter)
+
 module.exports = app
