@@ -20,7 +20,9 @@ app.set('view engine', 'ejs')
 app.use(express.static(path.join(__dirname, "public")))
 
 const homeRouter = require('./routes/home')
+const usersRouter = require('./routes/users')
 
 app.use('/', homeRouter)
+app.use('/users', usersRouter)
 
 module.exports = app
