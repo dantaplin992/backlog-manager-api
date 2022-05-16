@@ -16,7 +16,7 @@ const SessionsController = {
         console.log("Found user:")
         console.log(foundUser)
         let message = comparePassword(foundUser, req.body.password) ? "Verified" : "Incorrect"
-        res.json({ message: message })
+        res.json({ message: message, user: foundUser })
       } else {
         console.log("No user with that name")
         res.json({ message: "no user with that name" })
