@@ -8,7 +8,7 @@ const UsersController = {
     })
   },
   New: (req, res) => {
-    const newUser = new User(req.query)
+    const newUser = new User(req.body)
     newUser.save((err) => {
       if (err) throw err
     })
