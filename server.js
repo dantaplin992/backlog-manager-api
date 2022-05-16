@@ -16,6 +16,7 @@ app.use(express.json())
 
 const usersRouter = require('./routes/users')
 const homeRouter = require('./routes/home')
+const sessionsRouter = require('./routes/sessions.js')
 
 app.set('view engine', 'ejs')
 
@@ -23,5 +24,6 @@ app.use(express.static(path.join(__dirname, "public")))
 
 app.use('/', homeRouter)
 app.use('/users', usersRouter)
+app.use('/sessions', sessionsRouter)
 
 module.exports = app
