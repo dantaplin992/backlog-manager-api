@@ -8,10 +8,11 @@ const UsersController = {
     })
   },
   New: (req, res) => {
-    const newUser = new User(req.body)
-    newUser.save((err) => {
-      if (err) throw err
-    })
+    User.create(
+        req.body
+      ).then((result) => {
+        res.json(result)
+      })
   }
 }
 
