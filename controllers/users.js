@@ -12,7 +12,7 @@ const UsersController = {
     User.create(
       req.body
     ).then((result) => {
-      res.send(result)
+      res.json({ result: "Success" })
     })
   }
 }
