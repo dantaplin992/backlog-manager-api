@@ -8,11 +8,12 @@ const UsersController = {
     })
   },
   New: (req, res) => {
+    console.log(req.body)
     User.create(
-        req.body
-      ).then((result) => {
-        res.json(result)
-      })
+      req.body
+    ).then((result) => {
+      res.send(result)
+    })
   }
 }
 

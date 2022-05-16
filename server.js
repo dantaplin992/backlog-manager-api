@@ -1,6 +1,5 @@
 const express = require('express')
 const app = express()
-
 const path = require("path")
 const cors = require('cors')
 
@@ -15,12 +14,12 @@ app.get('/allow-cors', function(request, response) {
 
 app.use(express.json())
 
+const usersRouter = require('./routes/users')
+const homeRouter = require('./routes/home')
+
 app.set('view engine', 'ejs')
 
 app.use(express.static(path.join(__dirname, "public")))
-
-const homeRouter = require('./routes/home')
-const usersRouter = require('./routes/users')
 
 app.use('/', homeRouter)
 app.use('/users', usersRouter)
