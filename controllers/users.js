@@ -1,4 +1,5 @@
 const User = require('../models/users')
+const Backlog = require('../models/backlogs')
 
 const UsersController = {
   All: (req, res) => {
@@ -12,7 +13,12 @@ const UsersController = {
     User.create(
       req.body
     ).then((result) => {
-      res.json({ result: "Success" })
+      console.log(`NEW ID: ${result._id}`)
+      Backlog.create(
+        { userId: result._id }
+      ).then(() => {
+        res.json({ result: "Success" })
+      })
     })
   }
 }
