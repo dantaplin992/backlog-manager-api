@@ -17,14 +17,23 @@ const BacklogController = {
     })
   },
   Remove: (req, res) => {
-    console.log(req.body.game.name)
+    console.log("Removing: " + req.body.game.name)
     Backlog.updateOne(
       { userId: req.body.userId },
       { $pull: { queued: { name: req.body.game.name } } }
     ).then((result) => {
       res.send(result)
     })
-  }
+  },
+  StartPlaying: (req, res) => {
+    console.log("Start Playing: " + req.body.game.name)
+    Backlog.updateOne(
+      { userId: req.body.userId },
+      { $pull: { queued: { name: req.body.game.name } }, $push: { currentlyPlaying : req.body.game } }
+    ).then((result) => {
+      res.send(result)
+    })
+  },
 }
 
 module.exports = BacklogController;
