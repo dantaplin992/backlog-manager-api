@@ -12,7 +12,7 @@ const BacklogController = {
   Add: (req, res) => {
     Backlog.updateOne(
       { userId: req.body.userId },
-      { $push: { games: { title: req.body.title, currentlyPlaying: false, completed: false, badge: null } } }
+      { $push: { games: req.body.game } }
     ).then((result) => {
       res.send(result)
     })
