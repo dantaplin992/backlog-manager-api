@@ -34,6 +34,15 @@ const BacklogController = {
       res.send(result)
     })
   },
+  PlayLater: (req, res) => {
+    console.log("Moving " + req.body.game.name + " back into Backlog")
+    Backlog.updateOne(
+      { userId: req.body.userId },
+      { $pull: { currentlyPlaying: { name: req.body.game.name } }, $push: { queued : req.body.game } }
+    ).then((result) => {
+      res.send(result)
+    })
+  }
 }
 
 module.exports = BacklogController;
