@@ -2,7 +2,9 @@ const mongoose = require("mongoose")
 
 const BacklogSchema = new mongoose.Schema({
   userId: String,
-  games: [],
+  queued: [],
+  currentlyPlaying: [],
+  finished: [],
 })
 
 const Backlog = mongoose.model("Backlog", BacklogSchema)

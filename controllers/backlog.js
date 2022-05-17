@@ -5,18 +5,26 @@ const BacklogController = {
     Backlog.find(
       { userId: req.query.userid }
     ).then((result) => {
-      console.log(result)
       res.send(result)
     })
   },
   Add: (req, res) => {
     Backlog.updateOne(
       { userId: req.body.userId },
-      { $push: { games: req.body.game } }
+      { $push: { queued: req.body.game } }
     ).then((result) => {
       res.send(result)
     })
   },
+  Remove: (req, res) => {
+    console.log(req.body.game.name)
+    Backlog.updateOne(
+      { userId: req.body.userId },
+      { $pull: { queued: { name: req.body.game.name } } }
+    ).then((result) => {
+      res.send(result)
+    })
+  }
 }
 
 module.exports = BacklogController;
