@@ -42,6 +42,15 @@ const BacklogController = {
     ).then((result) => {
       res.send(result)
     })
+  },
+  Abandon: (req, res) => {
+    console.log("abandoning " + req.body.game.name)
+    Backlog.updateOne(
+      { userId: req.body.userId },
+      { $pull: { currentlyPlaying: { name: req.body.game.name } }, $push: { finished: req.body.game } }
+    ).then((result) => {
+      res.send(result)
+    })
   }
 }
 

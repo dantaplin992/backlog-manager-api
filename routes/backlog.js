@@ -8,5 +8,6 @@ router.post("/add", BacklogController.Add)
 router.post("/remove", BacklogController.Remove)
 router.post("/start_playing", BacklogController.StartPlaying)
 router.post("/play_later", BacklogController.PlayLater)
+router.post("/abandon", BacklogController.Abandon)
 
 module.exports = router
