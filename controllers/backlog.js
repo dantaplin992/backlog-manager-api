@@ -54,6 +54,18 @@ const BacklogController = {
     ).then((result) => {
       res.send(result)
     })
+  },
+  Review: (req, res) => {
+    console.log("Left a review for " + req.body.game.name)
+    let gameEntry = req.body.game
+    gameEntry.completionStatus = "Completed"
+    gameEntry.review = req.body.review
+    Backlog.updateOne(
+      { userId: req.body.userId },
+      { $pull: { currentlyPlaying: { name: req.body.game.name } }, $push: { finished: gameEntry } }
+    ).then((result) => {
+      res.send(result)
+    })
   }
 }
 
