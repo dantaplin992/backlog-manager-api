@@ -1,5 +1,17 @@
 const NewsFeed = require('../../models/news-feed')
 
+function addNewsFeedItem(params, action) {
+  const newFeedItem = new NewsFeed({
+    userId: params.userId,
+    username: params.username,
+    action: action,
+    gameTitle: params.game.name,
+    review: params.review,
+  }).save().then((res) => {
+    console.log(res)
+  })
+}
+
 function chat(io) {
   io.on('connection', (socket) => {
     console.log(`socket connected with id ${socket.id}`)
@@ -7,14 +19,26 @@ function chat(io) {
 
     socket.on('addedGame', (params) => {
       console.log(params)
-      const newFeedItem = new NewsFeed({
-        userId: params.userId,
-        username: params.username,
-        action: "add",
-        gameTitle: params.game.name
-      }).save().then(() => {
-        io.to('newsFeed').emit('refreshFeedItems', params)
-      })
+      addNewsFeedItem(params, "add")
+      io.to('newsFeed').emit('refreshFeedItems', params)
+    })
+
+    socket.on('startedPlaying', (params) => {
+      console.log(params)
+      addNewsFeedItem(params, "start")
+      io.to('newsFeed').emit('refreshFeedItems', params)
+    })
+
+    socket.on('abandonedGame', (params) => {
+      console.log(params)
+      addNewsFeedItem(params, "abandon")
+      io.to('newsFeed').emit('refreshFeedItems', params)
+    })
+
+    socket.on('review', (params) => {
+      console.log(params)
+      addNewsFeedItem(params, "review")
+      io.to('newsFeed').emit('refreshFeedItems', params)
     })
 
     socket.on('disconnect', () => {

@@ -8,7 +8,8 @@ const NewsFeedSchema = new mongoose.Schema({
   timeStamp: {
     type: Date,
     default: Date.now
-  }
+  },
+  review: String,
 })
 
 const NewsFeed = mongoose.model("news-feed", NewsFeedSchema)
