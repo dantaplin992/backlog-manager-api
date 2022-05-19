@@ -1,9 +1,5 @@
 const User = require('../models/users')
-
-function comparePassword(userObj, password) {
-  if (userObj.password === password) return true
-  return false
-}
+const bcrypt = require ('bcrypt')
 
 const SessionsController = {
   New: (req, res) => {
@@ -15,8 +11,11 @@ const SessionsController = {
       if(foundUser) {
         console.log("Found user:")
         console.log(foundUser)
-        let message = comparePassword(foundUser, req.body.password) ? "Verified" : "Incorrect"
-        res.json({ message: message, user: foundUser })
+        bcrypt.compare(req.body.password, foundUser.password, (err, result) => {
+          if (err) throw err
+          let message = result ? "Verified" : "Incorrect"
+          res.json({ message: message, user: foundUser })
+        })
       } else {
         console.log("No user with that name")
         res.json({ message: "no user with that name" })
