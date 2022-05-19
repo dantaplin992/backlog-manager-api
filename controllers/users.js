@@ -25,6 +25,14 @@ const UsersController = {
         })
       })
     })
+  },
+  Find: (req, res) => {
+    console.log("finding " + req.query.username)
+    User.find(
+      { username: req.query.username }
+    ).then((data) => {
+      res.send(data)
+    })
   }
 }
 
