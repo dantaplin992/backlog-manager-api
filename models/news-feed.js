@@ -10,6 +10,7 @@ const NewsFeedSchema = new mongoose.Schema({
     default: Date.now
   },
   review: String,
+  likes: [],
 })
 
 const NewsFeed = mongoose.model("news-feed", NewsFeedSchema)

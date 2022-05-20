@@ -1,3 +1,4 @@
+const { process_params } = require('express/lib/router')
 const NewsFeed = require('../../models/news-feed')
 
 function addNewsFeedItem(params, action) {
@@ -10,6 +11,10 @@ function addNewsFeedItem(params, action) {
   }).save().then((res) => {
     console.log(res)
   })
+}
+
+function updateLikes(params) {
+  
 }
 
 function chat(io) {
@@ -41,18 +46,38 @@ function chat(io) {
       io.to('newsFeed').emit('refreshFeedItems', params)
     })
 
-    socket.on('disconnect', () => {
-      console.log(`socket ${socket.id} disconnected`)
+    socket.on('addLike', (params) => {
+      NewsFeed.updateOne(
+        { _id: params.itemId },
+        { $push: { likes: params.username } }
+      ).then((res) => {
+        console.log(res)
+      })
+      io.to('newsFeed').emit('refreshFeedItems', params)
     })
 
+    socket.on('removeLike', (params) => {
+      NewsFeed.updateOne(
+        { _id: params.itemId },
+        { $pull: { likes: params.username } }
+      ).then((res) => {
+        console.log(res)
+      })
+      io.to('newsFeed').emit('refreshFeedItems', params)
+    })
+    
     socket.on('joinNewsFeed', () => {
       console.log('joining news feed room')
       socket.join('newsFeed')
     })
-
+    
     socket.on('leaveNewsFeed', () => {
       console.log('leaving news feed room')
       socket.leave('newsFeed')
+    })
+
+    socket.on('disconnect', () => {
+      console.log(`socket ${socket.id} disconnected`)
     })
   })
 }
